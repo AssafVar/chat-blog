@@ -4,15 +4,21 @@ import { useState } from 'react';
 
 
 function App() {
+  const axiosInstance = axios.create({
+    baseURL: 'https://jsonplaceholder.typicode.com'
+  });
 
   const [message, setMessage] = useState('');
-
   const testResponse  = async ()=>{
-    const response = await axios.get('http://localhost:5000/hello');
-    response.data && setMessage(response.data);
-  };
+    try{
 
-  !message && testResponse();
+      const response = await axiosInstance.get('/posts');
+      console.log(response.data);
+    }catch(error){
+      console.log(error.message);
+    }
+  };
+  testResponse();
 
   return (
     <div className="App">
